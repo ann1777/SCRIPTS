@@ -1,30 +1,25 @@
-File Information
-----------------
-Name: myscript (8).sh
-File type: Bash Shell Script (.sh)
-MIME Type: application/x-shellscript
-Opens with: File Viewer Plus 4
-Size: 561 bytes (561 bytes)
-Location: C:\Users\User\Downloads\
-Created: January 16, 2021 10:44 PM
-Modified: January 16, 2021 10:44 PM
-Accessed: January 16, 2021 10:44 PM
-Read-only: No
-Hidden: No
-System: No
-MD5: c275f2674b0e1bed8fd558954f98e09c
+#!bin/bash
+function report() {
+if [ $? -eq 0 ]
+then 
+	echo "$1 operation was successful"
+else 
+	echo "$1 operation is very bad"
+fi
+}
+echo "The home dir of current user is: $HOME"
+mkdir -p {myFolderA,myFolderB}
+cd myFolderA
+for (( i = 1; i <= 10; i++ )); do touch file$i.txt; done
+report "files created"
+zip -r myFolderA.zip *.txt
+report "zip"
+mv myFolderA.zip ../myFolderB
+report "move"
+cd /home/ann/Documents/myFolder1/myFolderB
+report "cd"
+unzip -o myFolderA.zip
+report "unzip"
+rm /home/ann/Documents/myFolder1/myFolderA/*.txt
+report "originals are deleted"
 
-File Metadata
-----------------
-MIME Encoding: us-ascii
-Newlines: Unix LF
-Line Count: 25
-Word Count: 82
-
-FileInfo.com Information
-.SH - 1 file type found
-----------------
-Type: Bash Shell Script
-Category: Developer
-Popularity: ★★★★★
-Developer: N/a
