@@ -1,7 +1,48 @@
-Создать базу данных BooksCREATE DATABASE BooksВойти в базу данных BooksUSE BooksСоздать таблицу Book с полями bookId (int, PK, AI), bookCategory (varchar(30)), bookName (varchar(30))CREATE TABLE Book (bookId int AUTO_INCREMENT PRIMARY KEY, bookCategory varchar(30), bookName varchar(50))Добавить категории книг: спорт, тестирование, детские и добавить по две книги в категориюINSERT INTO Book (bookId, bookCategory, bookName) VALUES (1, "Спорт", "Харуки Мураками «Когда говорю о беге»"), (2, "Спорт", "Марі Карачина «Never stop»"), (3, "Тестирование", "Роман Савин «Тестирование dot com»"), (4,"Тестирование", "Lee Copeland «Software Test Design»"), (5, "Детские", "Шел Силверстайн «Щедрое дерево»"), (6, "Детские", "Кристина Андрес. «Как приручить волков»")Добавить столбец страна издательства publisherCountry(varchar(30)) с ограничением NOT NULL и значением по умолчанию "N/A"ALTER TABLE Book ADD COLUMN (publisherCountry varchar(30) NOT NULL DEFAULT "N/A")Заменить значения "N/A" на “Ukraine”, “Russia” или “USA”UPDATE Book SET publisherCountry = 'Ukraine' WHERE bookId = 2;
+РЎРѕР·РґР°С‚СЊ Р±Р°Р·Сѓ РґР°РЅРЅС‹С… Books
+CREATE DATABASE Books
+Р’РѕР№С‚Рё РІ Р±Р°Р·Сѓ РґР°РЅРЅС‹С… Books
+USE Books
+РЎРѕР·РґР°С‚СЊ С‚Р°Р±Р»РёС†Сѓ Book СЃ РїРѕР»СЏРјРё bookId (int, PK, AI), bookCategory (varchar(30)), bookName (varchar(30))
+CREATE TABLE Book (bookId int AUTO_INCREMENT PRIMARY KEY, bookCategory varchar(30), bookName varchar(50))
+Р”РѕР±Р°РІРёС‚СЊ РєР°С‚РµРіРѕСЂРёРё РєРЅРёРі: СЃРїРѕСЂС‚, С‚РµСЃС‚РёСЂРѕРІР°РЅРёРµ, РґРµС‚СЃРєРёРµ Рё РґРѕР±Р°РІРёС‚СЊ РїРѕ РґРІРµ РєРЅРёРіРё РІ РєР°С‚РµРіРѕСЂРёСЋ
+INSERT INTO Book (bookId, bookCategory, bookName) VALUES (1, "РЎРїРѕСЂС‚", "РҐР°СЂСѓРєРё РњСѓСЂР°РєР°РјРё В«РљРѕРіРґР° РіРѕРІРѕСЂСЋ Рѕ Р±РµРіРµВ»"), (2, "РЎРїРѕСЂС‚", "РњР°СЂС– РљР°СЂР°С‡РёРЅР° В«Never stopВ»"), (3, "РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ", "Р РѕРјР°РЅ РЎР°РІРёРЅ В«РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ dot comВ»"), (4,"РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ", "Lee Copeland В«Software Test DesignВ»"), (5, "Р”РµС‚СЃРєРёРµ", "РЁРµР» РЎРёР»РІРµСЂСЃС‚Р°Р№РЅ В«Р©РµРґСЂРѕРµ РґРµСЂРµРІРѕВ»"), (6, "Р”РµС‚СЃРєРёРµ", "РљСЂРёСЃС‚РёРЅР° РђРЅРґСЂРµСЃ. В«РљР°Рє РїСЂРёСЂСѓС‡РёС‚СЊ РІРѕР»РєРѕРІВ»")
+Р”РѕР±Р°РІРёС‚СЊ СЃС‚РѕР»Р±РµС† СЃС‚СЂР°РЅР° РёР·РґР°С‚РµР»СЊСЃС‚РІР° publisherCountry(varchar(30)) СЃ РѕРіСЂР°РЅРёС‡РµРЅРёРµРј NOT NULL Рё Р·РЅР°С‡РµРЅРёРµРј РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ "N/A"
+ALTER TABLE Book ADD COLUMN (publisherCountry varchar(30) NOT NULL DEFAULT "N/A")
+Р—Р°РјРµРЅРёС‚СЊ Р·РЅР°С‡РµРЅРёСЏ "N/A" РЅР° вЂњUkraineвЂќ, вЂњRussiaвЂќ РёР»Рё вЂњUSAвЂќ
+UPDATE Book SET publisherCountry = 'Ukraine' WHERE bookId = 2;
 UPDATE Book SET publisherCountry = 'Russia' WHERE bookId = 1; 
 UPDATE Book SET publisherCountry = 'Russia' WHERE bookId =3; 
 UPDATE Book SET publisherCountry = 'Russia' WHERE bookId =5; 
-UPDATE Book SET publisherCountry = 'Russia' WHERE bookId =6;Вывести категории книг, которые содержат букву “п"SELECT bookCategory FROM book WHERE bookCategory LIKE "%п%"Вывести уникальные категории книгSELECT DISTINCT bookCategory FROM bookПосчитать количество категорий по стране издательства и вывести только те страны, в которых категорий меньше 3SELECT COUNT(bookCategory) from Book ORDER BY publisherCountry WHERE count(bookCategory) < 3Создать таблицу Price с полями priceId (int, PK, AI), bookPrice (int), bookID (int, FK)CREATE TABLE Price (priceId int AUTO_INCREMENT PRIMARY KEY, bookPrice int, bookId int, FOREIGN KEY(bookId) REFERENCES book(bookId))Добавить цены для книг - от 100 до 1000INSERT INTO Price (priceId, bookPrice, bookId) VALUES (1, 145, 2), (2, 189, 1), (3, 225, 3), (4, 456, 5), (5, 134, 6), (6, 342, 10)Заполнить bookID в таблице Price значениями из bookID в таблице BookSELECT priceID, bookPrice, bookCategory, bookName, publisherCountry FROM Price, Book WHERE price.bookID = book.bookIDВывести минимальную стоимость книгиSELECT MIN(bookPrice) FOR bookPrice FROM PriceВывести 3-ю запись с концаSELECT * FROM Price WHERE priceId>0 ORDER BY priceId DESC LIMIT 2, 1Вывести цены от 500 до 1000SELECT * FROM Price WHERE bookPrice >=500 AND bookPrice <=1000
-или SELECT * FROM Price WHERE bookPrice BETWEEN 500 AND 1000Вывести названия книг и их ценыSELECT bookName, bookPrice FROM Book, Price WHERE Book.bookId = Price.bookIdВывести название книги с ценой выше среднегоSELECT bookName, bookPrice FROM book, price WHERE book.bookID=price.bookID AND bookPrice > (select avg(bookPrice) from price)Удалить строки в таблице Price с ценой ниже 500DELETE * FROM Price WHERE bookPrice < 500Удалить базу данныхDROP DATABASE BooksСоединить 3 таблицыSELECT * FROM ((table_1 INNER JOIN table_2 ON table_1.name=table_2.name) INNER JOIN table_3 on table_1.name=table_3.name)
+UPDATE Book SET publisherCountry = 'Russia' WHERE bookId =6;
+Р’С‹РІРµСЃС‚Рё РєР°С‚РµРіРѕСЂРёРё РєРЅРёРі, РєРѕС‚РѕСЂС‹Рµ СЃРѕРґРµСЂР¶Р°С‚ Р±СѓРєРІСѓ вЂњРї"
+SELECT bookCategory FROM book WHERE bookCategory LIKE "%Рї%"
+Р’С‹РІРµСЃС‚Рё СѓРЅРёРєР°Р»СЊРЅС‹Рµ РєР°С‚РµРіРѕСЂРёРё РєРЅРёРі
+SELECT DISTINCT bookCategory FROM book
+РџРѕСЃС‡РёС‚Р°С‚СЊ РєРѕР»РёС‡РµСЃС‚РІРѕ РєР°С‚РµРіРѕСЂРёР№ РїРѕ СЃС‚СЂР°РЅРµ РёР·РґР°С‚РµР»СЊСЃС‚РІР° Рё РІС‹РІРµСЃС‚Рё С‚РѕР»СЊРєРѕ С‚Рµ СЃС‚СЂР°РЅС‹, РІ РєРѕС‚РѕСЂС‹С… РєР°С‚РµРіРѕСЂРёР№ РјРµРЅСЊС€Рµ 3
+SELECT COUNT(bookCategory) from Book ORDER BY publisherCountry WHERE count(bookCategory) < 3
+РЎРѕР·РґР°С‚СЊ С‚Р°Р±Р»РёС†Сѓ Price СЃ РїРѕР»СЏРјРё priceId (int, PK, AI), bookPrice (int), bookID (int, FK)
+CREATE TABLE Price (priceId int AUTO_INCREMENT PRIMARY KEY, bookPrice int, bookId int, FOREIGN KEY(bookId) REFERENCES book(bookId))
+Р”РѕР±Р°РІРёС‚СЊ С†РµРЅС‹ РґР»СЏ РєРЅРёРі - РѕС‚ 100 РґРѕ 1000
+INSERT INTO Price (priceId, bookPrice, bookId) VALUES (1, 145, 2), (2, 189, 1), (3, 225, 3), (4, 456, 5), (5, 134, 6), (6, 342, 10)
+Р—Р°РїРѕР»РЅРёС‚СЊ bookID РІ С‚Р°Р±Р»РёС†Рµ Price Р·РЅР°С‡РµРЅРёСЏРјРё РёР· bookID РІ С‚Р°Р±Р»РёС†Рµ Book
+SELECT priceID, bookPrice, bookCategory, bookName, publisherCountry FROM Price, Book WHERE price.bookID = book.bookID
+Р’С‹РІРµСЃС‚Рё РјРёРЅРёРјР°Р»СЊРЅСѓСЋ СЃС‚РѕРёРјРѕСЃС‚СЊ РєРЅРёРіРё
+SELECT MIN(bookPrice) FOR bookPrice FROM Price
+Р’С‹РІРµСЃС‚Рё 3-СЋ Р·Р°РїРёСЃСЊ СЃ РєРѕРЅС†Р°
+SELECT * FROM Price WHERE priceId>0 ORDER BY priceId DESC LIMIT 2, 1
+Р’С‹РІРµСЃС‚Рё С†РµРЅС‹ РѕС‚ 500 РґРѕ 1000
+SELECT * FROM Price WHERE bookPrice >=500 AND bookPrice <=1000
+РёР»Рё SELECT * FROM Price WHERE bookPrice BETWEEN 500 AND 1000
+Р’С‹РІРµСЃС‚Рё РЅР°Р·РІР°РЅРёСЏ РєРЅРёРі Рё РёС… С†РµРЅС‹
+SELECT bookName, bookPrice FROM Book, Price WHERE Book.bookId = Price.bookId
+Р’С‹РІРµСЃС‚Рё РЅР°Р·РІР°РЅРёРµ РєРЅРёРіРё СЃ С†РµРЅРѕР№ РІС‹С€Рµ СЃСЂРµРґРЅРµРіРѕ
+SELECT bookName, bookPrice FROM book, price WHERE book.bookID=price.bookID AND bookPrice > (select avg(bookPrice) from price)
+РЈРґР°Р»РёС‚СЊ СЃС‚СЂРѕРєРё РІ С‚Р°Р±Р»РёС†Рµ Price СЃ С†РµРЅРѕР№ РЅРёР¶Рµ 500
+DELETE * FROM Price WHERE bookPrice < 500
+РЈРґР°Р»РёС‚СЊ Р±Р°Р·Сѓ РґР°РЅРЅС‹С…
+DROP DATABASE Books
+РЎРѕРµРґРёРЅРёС‚СЊ 3 С‚Р°Р±Р»РёС†С‹
+SELECT * FROM ((table_1 INNER JOIN table_2 ON table_1.name=table_2.name) INNER JOIN table_3 on table_1.name=table_3.name)
+
+
 
